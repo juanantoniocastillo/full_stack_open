@@ -10,7 +10,7 @@ const Content = (props) => {
   return(
     <div>
       {Object.entries(props).map(([key, value]) => (
-        <p id={key}>
+        <p key={key}>
           {value}
         </p>
       ))}
