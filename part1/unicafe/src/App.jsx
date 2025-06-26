@@ -36,6 +36,7 @@ const Average = ({clickValues}) => {
 
 const Positive = ({clickValues, good}) => <>Positive: {(good/clickValues.length)*100}%<br /></>
 
+// Part 1d - Exercise 8 was already done at previous exercise
 const Statistics = ({options, clickValues, good}) => (
   <p>
     <Total options={options} />
