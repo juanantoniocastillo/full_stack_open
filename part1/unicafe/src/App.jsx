@@ -19,33 +19,31 @@ const Buttons = ({options, handleClick}) => (
   </div>
 )
 
-const Total = ({options, clickValues}) => (
-  <>
-    {options.map((option) => (<span key={option.total_id}>{option.text} {option.state_var}<br /></span>))}
-    <>All {clickValues.length}<br /></>
-  </>
+const StatisticLine = ({text, value}) => (
+  <span>{text} {value}<br /></span>
 )
-
-const Average = ({clickValues}) => {
-  let sum = 0
-  clickValues.map((value) => (sum += value))
-  const average = sum / clickValues.length
-  return (
-    <>Average: {average}<br /></>
-  )
-}
-
-const Positive = ({clickValues, good}) => <>Positive: {(good/clickValues.length)*100}%<br /></>
-
-const Statistics = ({options, clickValues, good}) => {
+const Statistics = ({clickValues, good, neutral, bad}) => {
+  // No feedback message
   if (clickValues.length === 0) {
     return (<p>No feedback given</p>)
   }
+
+  // Average calculation
+  let sum = 0
+  clickValues.map((value) => (sum += value))
+  const average = sum / clickValues.length
+
+  // Positive calculation
+  const positive = String((good/clickValues.length)*100) + '%'
+
   return (
     <p>
-      <Total options={options} clickValues={clickValues}/>
-      <Average clickValues={clickValues} />
-      <Positive clickValues={clickValues} good={good} />
+      <StatisticLine text={'GOOD:'} value={good} />
+      <StatisticLine text={'NEUTRAL:'} value={neutral} />
+      <StatisticLine text={'BAD:'} value={bad} />
+      <StatisticLine text={'All:'} value={clickValues.length} />
+      <StatisticLine text={'Average:'} value={average} />
+      <StatisticLine text={'Positive:'} value={positive} />
     </p>
   )
 }
@@ -106,7 +104,7 @@ const App = () => {
       <Header text={header1} />
       <Buttons options={feedback_options} handleClick={handleClick} />
       <Header text={header2} />
-      <Statistics options={feedback_options} clickValues={clickValues} good={good}/>
+      <Statistics clickValues={clickValues} good={good} neutral={neutral} bad={bad}/>
     </div>
   )
 }
