@@ -19,9 +19,10 @@ const Buttons = ({options, handleClick}) => (
   </div>
 )
 
-const Total = ({options}) => (
+const Total = ({options, clickValues}) => (
   <>
     {options.map((option) => (<span key={option.total_id}>{option.text} {option.state_var}<br /></span>))}
+    <>All {clickValues.length}<br /></>
   </>
 )
 
@@ -42,7 +43,7 @@ const Statistics = ({options, clickValues, good}) => {
   }
   return (
     <p>
-      <Total options={options} />
+      <Total options={options} clickValues={clickValues}/>
       <Average clickValues={clickValues} />
       <Positive clickValues={clickValues} good={good} />
     </p>
