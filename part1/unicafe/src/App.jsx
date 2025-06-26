@@ -36,14 +36,18 @@ const Average = ({clickValues}) => {
 
 const Positive = ({clickValues, good}) => <>Positive: {(good/clickValues.length)*100}%<br /></>
 
-// Part 1d - Exercise 8 was already done at previous exercise
-const Statistics = ({options, clickValues, good}) => (
-  <p>
-    <Total options={options} />
-    <Average clickValues={clickValues} />
-    <Positive clickValues={clickValues} good={good} />
-  </p>
-)
+const Statistics = ({options, clickValues, good}) => {
+  if (clickValues.length === 0) {
+    return (<p>No feedback given</p>)
+  }
+  return (
+    <p>
+      <Total options={options} />
+      <Average clickValues={clickValues} />
+      <Positive clickValues={clickValues} good={good} />
+    </p>
+  )
+}
 
 const App = () => {
   // This application displays the total number of collected feedback for each category: good, neutral and bad.
