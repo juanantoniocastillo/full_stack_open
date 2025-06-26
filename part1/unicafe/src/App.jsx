@@ -19,9 +19,13 @@ const Buttons = ({options, handleClick}) => (
   </div>
 )
 
-const StatisticLine = ({text, value}) => (
-  <span>{text} {value}<br /></span>
+const StatisticRow = ({text, value}) => (
+  <tr>
+    <td>{text}</td>
+    <td>{value}</td>
+  </tr>
 )
+
 const Statistics = ({clickValues, good, neutral, bad}) => {
   // No feedback message
   if (clickValues.length === 0) {
@@ -36,21 +40,23 @@ const Statistics = ({clickValues, good, neutral, bad}) => {
   // Positive calculation
   const positive = String((good/clickValues.length)*100) + '%'
 
+  // Satistics render
   return (
-    <p>
-      <StatisticLine text={'GOOD:'} value={good} />
-      <StatisticLine text={'NEUTRAL:'} value={neutral} />
-      <StatisticLine text={'BAD:'} value={bad} />
-      <StatisticLine text={'All:'} value={clickValues.length} />
-      <StatisticLine text={'Average:'} value={average} />
-      <StatisticLine text={'Positive:'} value={positive} />
-    </p>
+    <table>
+      <tbody>
+        <StatisticRow text={'GOOD:'} value={good} />
+        <StatisticRow text={'NEUTRAL:'} value={neutral} />
+        <StatisticRow text={'BAD:'} value={bad} />
+        <StatisticRow text={'All:'} value={clickValues.length} />
+        <StatisticRow text={'Average:'} value={average} />
+        <StatisticRow text={'Positive:'} value={positive} />
+      </tbody>
+    </table>
   )
 }
 
+// This application displays the total number of collected feedback for each category: good, neutral and bad; the total number of feedback; the average feedback; and the positive feedback percentage.
 const App = () => {
-  // This application displays the total number of collected feedback for each category: good, neutral and bad.
-
   // state definition
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
