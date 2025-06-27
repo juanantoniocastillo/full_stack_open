@@ -1,13 +1,13 @@
 import { useState } from 'react'
 
-//functions
-const getRandomInt = (min, max) => {
-  const minCeiled = Math.ceil(min);
-  const maxFloored = Math.floor(max);
-  return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
-}
+//aux functions
+const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min) + min)
 
 //components
+const Header = ({text}) => (
+  <h1>{text}</h1>
+)
+
 const Anecdote = ({anecdotes, selected}) => (
   <p>
     {anecdotes[selected]}
@@ -26,8 +26,26 @@ const Button = ({onClick, text}) => (
   </button>
 )
 
+const BestAnecdote = ({anecdotes, votes}) => {
+  const maxVotes = Math.max(...votes)
+  if (maxVotes === 0) {
+    return <p>No anecdotes have been voted for yet.</p>
+  }
+  const bestAnecdoteIndex = votes.indexOf(maxVotes)
+  console.log('Best anecdote index:', bestAnecdoteIndex)
+  return (
+    <div>
+      <p>{anecdotes[bestAnecdoteIndex]}</p>
+      <p>Has {maxVotes} votes.</p>
+    </div>
+  )
+}
 
-/*This application shows random anecdotes of Software Engineering */
+
+/*This application shows random anecdotes of Software Engineering;
+allow the user to vote them;
+and shows the most voted anecdote*/
+
 const App = () => {
   // var definition
   const anecdotes = [
@@ -40,6 +58,8 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
     'The only way to go fast, is to go well.'
   ]
+  const title1 = 'Anecdote of the day'
+  const title2 = 'Anecdote with most votes'
 
   // state definition 
   const [selected, setSelected] = useState(0)
@@ -47,13 +67,13 @@ const App = () => {
 
   // event handlers
   const handleNextClick = () => {
-    let random_number = getRandomInt(0, anecdotes.length)
-    while (random_number === selected) {
+    let randomNumber = getRandomInt(0, anecdotes.length)
+    while (randomNumber === selected) {
       console.log('Repeated number')
-      random_number = getRandomInt(0, anecdotes.length)
+      randomNumber = getRandomInt(0, anecdotes.length)
     }
-    console.log('Random number is:', random_number)
-    setSelected(random_number)
+    console.log('Random number is:', randomNumber)
+    setSelected(randomNumber)
   }
   const handleVoteClick = () => {
       const updatedVotes = [...votes]
@@ -65,10 +85,13 @@ const App = () => {
   // app body
   return (
     <div>
+      <Header text={title1} />
       <Anecdote anecdotes={anecdotes} selected={selected} />
       <Votes votes={votes} selected={selected} />
       <Button onClick={handleVoteClick} text={'vote'} />
       <Button onClick={handleNextClick} text={'next anecdote'} />
+      <Header text={title2} />
+      <BestAnecdote anecdotes={anecdotes} votes={votes} />
     </div>
   )
 }
