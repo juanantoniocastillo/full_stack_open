@@ -8,6 +8,18 @@ const getRandomInt = (min, max) => {
 }
 
 //components
+const Anecdote = ({anecdotes, selected}) => (
+  <p>
+    {anecdotes[selected]}
+  </p>
+)
+
+const Votes = ({votes, selected}) => (
+  <p>
+    Has {votes[selected]} votes.
+  </p>
+)
+
 const Button = ({onClick, text}) => (
   <button onClick={onClick}>
     {text}
@@ -17,9 +29,6 @@ const Button = ({onClick, text}) => (
 
 /*This application shows random anecdotes of Software Engineering */
 const App = () => {
-  // state definition 
-  const [selected, setSelected] = useState(0)
-
   // var definition
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -32,18 +41,34 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
 
+  // state definition 
+  const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
+
   // event handlers
-  const handleClick = () => {
-    const random_number = getRandomInt(0, anecdotes.length)
+  const handleNextClick = () => {
+    let random_number = getRandomInt(0, anecdotes.length)
+    while (random_number === selected) {
+      console.log('Repeated number')
+      random_number = getRandomInt(0, anecdotes.length)
+    }
     console.log('Random number is:', random_number)
     setSelected(random_number)
+  }
+  const handleVoteClick = () => {
+      const updatedVotes = [...votes]
+      updatedVotes[selected] += 1
+      console.log('Updated votes are:', updatedVotes)
+      setVotes(updatedVotes)
   }
 
   // app body
   return (
     <div>
-      {anecdotes[selected]}<br />
-      <Button onClick={handleClick} text={'next anecdote'} />
+      <Anecdote anecdotes={anecdotes} selected={selected} />
+      <Votes votes={votes} selected={selected} />
+      <Button onClick={handleVoteClick} text={'vote'} />
+      <Button onClick={handleNextClick} text={'next anecdote'} />
     </div>
   )
 }
