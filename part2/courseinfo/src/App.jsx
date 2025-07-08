@@ -1,4 +1,4 @@
-import Courses from './components/Courses'
+import Courses from './components/Courses' // Exercise 5 was already done before
 
 /*This application shows course information: title, parts and exercises*/
 const App = () => {
