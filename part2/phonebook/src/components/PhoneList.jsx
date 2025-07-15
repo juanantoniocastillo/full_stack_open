@@ -1,10 +1,13 @@
 import SubHeader from "./SubHeader"
+import FilterField from "./FilterField"
 
-const PhoneList = ({header, persons}) => {
+const PhoneList = ({header, persons, filter, setFilter}) => {
+    const personsToShow = (filter === '') ? persons : persons.filter( (person) => person.name.toLowerCase().includes( filter.toLowerCase() ) )
     return(
         <div>
             <SubHeader text={header} />
-            {persons.map((person) => (<p key={person.name}>{person.name} {person.number}</p>))}
+            <FilterField filter={filter} setFilter={setFilter} />
+            { personsToShow.map((person) => (<p key={person.id}>{person.name} {person.number}</p>)) }
         </div>
     )
 }
