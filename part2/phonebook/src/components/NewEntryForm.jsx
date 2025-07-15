@@ -3,9 +3,15 @@ const NewEntryForm = ({persons, setPersons, newName, setNewName}) => {
     const addEntry = (event) => {
         event.preventDefault()
         if (newName !== '') {
-            const newPerson = { name: newName }
-            setPersons(persons.concat(newPerson))
-            setNewName('')
+            const isRepeated = persons.some((person) => person.name === newName)
+            console.log('isRepeated:', isRepeated)
+            if (isRepeated) {
+                alert(`${newName} is already added to phonebook`)
+            } else {
+                const newPerson = { name: newName }
+                setPersons(persons.concat(newPerson))
+                setNewName('')
+            }
         }
     }
 
