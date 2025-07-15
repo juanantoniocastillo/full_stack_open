@@ -17,7 +17,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
 
-  // app body
+  // app body. Note: Exercise 10 was already done before
   return (
     <div>
       <Header text={'Phonebook'} />
