@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import Header from './components/Header'
 import NewEntryForm from './components/NewEntryForm'
 import PhoneList from './components/PhoneList'
@@ -7,15 +8,19 @@ import PhoneList from './components/PhoneList'
 prevents to add duplicate names and implement a name filter field. */
 const App = () => {
   //state definition
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-1234567', id: 1 },
-    { name: 'Perico Palotes', number: '956 08 22 13', id: 2 },
-    { name: 'Makina Jhonny', number: '634 126 384', id: 3 },
-    { name: 'Gordo Master', number: '044-8957236', id: 4 }
-  ]) 
+  const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+
+  // Effect definition
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+      })
+  }, [])
 
   // app body. Note: Exercise 10 was already done before
   return (
