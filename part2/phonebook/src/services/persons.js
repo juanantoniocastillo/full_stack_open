@@ -13,4 +13,4 @@ const addPerson = newPerson => (
         .then(response => response.data)
 )
 
-export default {getAll, addPerson}
+export default {getAll, addPerson} //Exercise 13 was already done before
