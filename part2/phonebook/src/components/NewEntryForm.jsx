@@ -1,3 +1,5 @@
+import personService from '../services/persons'
+
 const NewEntryForm = ({persons, setPersons, newName, setNewName, newNumber, setNewNumber}) => {
 
     const addEntry = (event) => {
@@ -8,9 +10,14 @@ const NewEntryForm = ({persons, setPersons, newName, setNewName, newNumber, setN
                 alert(`${newName} is already added to phonebook`)
             } else {
                 const newPerson = { name: newName, number: newNumber, id: String(persons.length + 1) }
-                setPersons(persons.concat(newPerson))
-                setNewName('')
-                setNewNumber('')
+                personService
+                    .addPerson(newPerson)
+                    .then(returnedPerson => {
+                        console.log(returnedPerson)
+                        setPersons(persons.concat(returnedPerson))
+                        setNewName('')
+                        setNewNumber('')
+                    })
             }
         }
     }

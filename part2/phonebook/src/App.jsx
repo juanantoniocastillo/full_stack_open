@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import personsService from './services/persons'
 import Header from './components/Header'
 import NewEntryForm from './components/NewEntryForm'
 import PhoneList from './components/PhoneList'
@@ -15,18 +15,23 @@ const App = () => {
 
   // Effect definition
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
-      })
+    personsService
+      .getAll()
+      .then(initialPersons => setPersons(initialPersons))
   }, [])
 
   // app body. Note: Exercise 10 was already done before
   return (
     <div>
       <Header text={'Phonebook'} />
-      <NewEntryForm persons={persons} setPersons={setPersons} newName={newName} setNewName={setNewName} newNumber={newNumber} setNewNumber={setNewNumber} />
+      <NewEntryForm
+        persons={persons}
+        setPersons={setPersons}
+        newName={newName}
+        setNewName={setNewName}
+        newNumber={newNumber}
+        setNewNumber={setNewNumber}
+      />
       <PhoneList header={'Numbers'} persons={persons} filter={filter} setFilter={setFilter} />
     </div>
   )
