@@ -9,11 +9,11 @@ const NewEntryForm = ({persons, setPersons, newName, setNewName, newNumber, setN
             if (isRepeated) {
                 alert(`${newName} is already added to phonebook`)
             } else {
-                const newPerson = { name: newName, number: newNumber, id: String(persons.length + 1) }
+                const maxId = Math.max(...persons.map(person => parseInt(person.id)))
+                const newPerson = { name: newName, number: newNumber, id: String(maxId + 1) }
                 personService
                     .addPerson(newPerson)
                     .then(returnedPerson => {
-                        console.log(returnedPerson)
                         setPersons(persons.concat(returnedPerson))
                         setNewName('')
                         setNewNumber('')

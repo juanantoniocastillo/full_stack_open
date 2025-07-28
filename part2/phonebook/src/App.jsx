@@ -32,7 +32,7 @@ const App = () => {
         newNumber={newNumber}
         setNewNumber={setNewNumber}
       />
-      <PhoneList header={'Numbers'} persons={persons} filter={filter} setFilter={setFilter} />
+      <PhoneList header={'Numbers'} persons={persons} setPersons={setPersons} filter={filter} setFilter={setFilter} />
     </div>
   )
 }
