@@ -5,7 +5,7 @@ const PersonsList = ({filter, persons, setPersons}) => {
 
     const handleClick = (id) => {
         const nameToDelete = personsToShow.find(person => person.id === id).name
-        if (window.confirm(`You are going to delete ${nameToDelete}. Do you want to proceed?`)) {
+        if (window.confirm(`${nameToDelete} will be deleted. Do you want to proceed?`)) {
             personsService
                 .deletePerson(id)
                 .then(response => {
