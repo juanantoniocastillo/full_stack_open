@@ -1,6 +1,6 @@
 import personService from '../services/persons'
 
-const NewEntryForm = ({persons, setPersons, newName, setNewName, newNumber, setNewNumber}) => {
+const NewEntryForm = ({persons, setPersons, newName, setNewName, newNumber, setNewNumber, setNotificationInfo}) => {
 
     const addEntry = (event) => {
         event.preventDefault()
@@ -21,6 +21,8 @@ const NewEntryForm = ({persons, setPersons, newName, setNewName, newNumber, setN
                                 setPersons(persons.map(person => person.id === updatedPerson.id ? response : person))
                                 setNewName('')
                                 setNewNumber('')
+                                setNotificationInfo({ message: `Updated ${updatedPerson.name}'s number.`, error: false })
+                                setTimeout(() => setNotificationInfo({ message: null, error: false }), 5000)
                             })
                     }                   
                 }
@@ -33,6 +35,8 @@ const NewEntryForm = ({persons, setPersons, newName, setNewName, newNumber, setN
                         setPersons(persons.concat(returnedPerson))
                         setNewName('')
                         setNewNumber('')
+                        setNotificationInfo({ message: `Added ${returnedPerson.name}.`, error: false })
+                        setTimeout(() => setNotificationInfo({ message: null, error: false }), 5000)
                     })
             }
         }

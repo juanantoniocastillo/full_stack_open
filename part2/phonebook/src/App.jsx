@@ -3,6 +3,7 @@ import personsService from './services/persons'
 import Header from './components/Header'
 import NewEntryForm from './components/NewEntryForm'
 import PhoneList from './components/PhoneList'
+import Notification from './components/Notification'
 
 /* This application adds names and numbers to a Phonebook,
 prevents to add duplicate names and implement a name filter field. */
@@ -12,6 +13,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [notificationInfo, setNotificationInfo] = useState({ message: null, error: false })
 
   // Effect definition
   useEffect(() => {
@@ -24,6 +26,7 @@ const App = () => {
   return (
     <div>
       <Header text={'Phonebook'} />
+      <Notification notificationInfo={notificationInfo} />
       <NewEntryForm
         persons={persons}
         setPersons={setPersons}
@@ -31,6 +34,7 @@ const App = () => {
         setNewName={setNewName}
         newNumber={newNumber}
         setNewNumber={setNewNumber}
+        setNotificationInfo={setNotificationInfo}
       />
       <PhoneList header={'Numbers'} persons={persons} setPersons={setPersons} filter={filter} setFilter={setFilter} />
     </div>
