@@ -6,7 +6,6 @@ const NewEntryForm = ({persons, setPersons, newName, setNewName, newNumber, setN
         event.preventDefault()
         if (newName !== '' && newNumber !== '') {
 
-            const nameExists = persons.some((person) => person.name.toLowerCase() === newName.toLowerCase()) //delete
             const repeatedEntry = persons.find( person => person.name.toLowerCase() === newName.toLowerCase() )
 
             if (repeatedEntry !== undefined) {
