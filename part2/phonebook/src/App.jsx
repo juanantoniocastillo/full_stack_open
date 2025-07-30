@@ -36,7 +36,16 @@ const App = () => {
         setNewNumber={setNewNumber}
         setNotificationInfo={setNotificationInfo}
       />
-      <PhoneList header={'Numbers'} persons={persons} setPersons={setPersons} filter={filter} setFilter={setFilter} />
+      <PhoneList
+        header={'Numbers'}
+        persons={persons}
+        setPersons={setPersons}
+        filter={filter}
+        setFilter={setFilter}
+        setNotificationInfo={setNotificationInfo}
+        setNewName={setNewName}
+        setNewNumber={setNewNumber}
+      />
     </div>
   )
 }

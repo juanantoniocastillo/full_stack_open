@@ -1,6 +1,6 @@
 import personsService from '../services/persons'
 
-const PersonsList = ({filter, persons, setPersons}) => {
+const PersonsList = ({filter, persons, setPersons, setNotificationInfo, setNewName, setNewNumber}) => {
     const personsToShow = (filter === '') ? persons : persons.filter( (person) => person.name.toLowerCase().includes( filter.toLowerCase() ) )
 
     const handleClick = (id) => {
@@ -10,6 +10,16 @@ const PersonsList = ({filter, persons, setPersons}) => {
                 .deletePerson(id)
                 .then(response => {
                     setPersons(persons.filter(person => person.id !== id))
+                })
+                .catch(error => {
+                    setNotificationInfo({
+                        message: `${nameToDelete} has already been removed from server.`,
+                        error: true
+                    })
+                    setPersons(persons.filter(person => person.id !== id))
+                    setNewName('')
+                    setNewNumber('')
+                    setTimeout(() => setNotificationInfo({ message: null, error: false }), 5000)
                 })
         }
     }

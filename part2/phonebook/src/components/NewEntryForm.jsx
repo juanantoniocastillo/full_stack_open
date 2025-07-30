@@ -24,6 +24,16 @@ const NewEntryForm = ({persons, setPersons, newName, setNewName, newNumber, setN
                                 setNotificationInfo({ message: `Updated ${updatedPerson.name}'s number.`, error: false })
                                 setTimeout(() => setNotificationInfo({ message: null, error: false }), 5000)
                             })
+                            .catch(error => {
+                                setNotificationInfo({
+                                    message: `Information of ${updatedPerson.name} has already been removed from server.`,
+                                    error: true
+                                })
+                                setPersons(persons.filter(person => person.id !== updatedPerson.id))
+                                setNewName('')
+                                setNewNumber('')
+                                setTimeout(() => setNotificationInfo({ message: null, error: false }), 5000)
+                            })
                     }                   
                 }
             } else {
