@@ -37,8 +37,7 @@ const NewEntryForm = ({persons, setPersons, newName, setNewName, newNumber, setN
                     }                   
                 }
             } else {
-                const maxId = Math.max(...persons.map(person => parseInt(person.id)))
-                const newPerson = { name: newName, number: newNumber, id: String(maxId + 1) }
+                const newPerson = { name: newName, number: newNumber }
                 personService
                     .addPerson(newPerson)
                     .then(returnedPerson => {
