@@ -1,6 +1,7 @@
 import CountryData from "./CountryData"
+import ListOfCountries from "./ListOfCountries"
 
-const DataForCountries = ({inputCountry, allCountries}) => {
+const DataForCountries = ({inputCountry, setInputCountry, allCountries}) => {
 
     if (inputCountry === '') {
         return (
@@ -25,11 +26,7 @@ const DataForCountries = ({inputCountry, allCountries}) => {
         )
     } if (filteredCountries.length > 1 && filteredCountries.length <= 10) {
         return (
-            <div>
-                {filteredCountries.map(country => (
-                    <p key={country.name.common}>{country.name.common}</p>
-                ))}
-            </div>
+            <ListOfCountries filteredCountries={filteredCountries} setInputCountry={setInputCountry} />
         )
     } if (filteredCountries.length > 10) {
         return (
