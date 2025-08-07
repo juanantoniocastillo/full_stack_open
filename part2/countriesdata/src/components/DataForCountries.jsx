@@ -12,7 +12,6 @@ const DataForCountries = ({inputCountry, setInputCountry, allCountries}) => {
     }
 
     const filteredCountries = allCountries.filter(country => country.name.common.toLowerCase().includes(inputCountry.toLowerCase()))
-    console.log('filteredCountries', filteredCountries)
 
     if (filteredCountries.length === 0) {
         return (
