@@ -29,8 +29,20 @@ app.get('/info', (req, res) => {
   res.send(`Phonebook has info for ${persons.length} people.<br><br>${req_time}`)
 })
 
-app.get('/api/persons', (request, response) => {
-    response.json(persons)
+app.get('/api/persons', (req, res) => {
+  res.json(persons)
+})
+
+app.get('/api/persons/:id', (req, res) => {
+  const id = req.params.id
+  const req_person = persons.find(element => element.id === id)
+
+  if (req_person) {
+    res.json(req_person)
+  } else {
+    res.statusMessage = `ID ${id} not found.`
+    res.status(404).end()
+  }
 })
 
 const PORT = 3001
