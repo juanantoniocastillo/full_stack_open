@@ -1,8 +1,11 @@
+// App initialization
 const express = require('express')
 const app = express()
 
+// JSON middleware parser
 app.use(express.json())
 
+// Hardcoded database
 let persons = [
     { 
       "id": "1",
@@ -26,15 +29,20 @@ let persons = [
     }
 ]
 
+// API operations
+
+// Get info
 app.get('/info', (req, res) => {
   const req_time = new Date().toString()
   res.send(`Phonebook has info for ${persons.length} people.<br><br>${req_time}`)
 })
 
+// Get all resources
 app.get('/api/persons', (req, res) => {
   res.json(persons)
 })
 
+// Get a specific resource
 app.get('/api/persons/:id', (req, res) => {
   const id = req.params.id
   const req_person = persons.find(element => element.id === id)
@@ -47,6 +55,7 @@ app.get('/api/persons/:id', (req, res) => {
   }
 })
 
+// Delete a specific resource
 app.delete('/api/persons/:id', (req, res) => {
   const id = req.params.id
   persons = persons.filter(person => person.id !== id)
@@ -55,12 +64,21 @@ app.delete('/api/persons/:id', (req, res) => {
   res.status(204).end()
 })
 
+// Add a new resource
 app.post('/api/persons', (req, res) => {
   const body = req.body
 
   if (!body.name || !body.number) {
     return res.status(400).json({
       error: 'Name or number missing'
+    })
+  }
+
+  const repeated_name = persons.find(person => person.name === body.name)
+
+  if (repeated_name) {
+    return res.status(400).json({
+      error: 'Name already exists'
     })
   }
 
@@ -75,6 +93,8 @@ app.post('/api/persons', (req, res) => {
   res.json(new_person)
 })
 
+
+// Listen to HTTP requests
 const PORT = 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
