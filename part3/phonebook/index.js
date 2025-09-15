@@ -5,9 +5,12 @@ var morgan = require('morgan')
 // App initialization
 const app = express()
 
+// Morgan tokens
+morgan.token('postData', (req, res) => (JSON.stringify(req.body)))
+
 // Middleware
 app.use(express.json())
-app.use(morgan('tiny'))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :postData'))
 
 // Hardcoded database
 let persons = [
@@ -63,7 +66,6 @@ app.get('/api/persons/:id', (req, res) => {
 app.delete('/api/persons/:id', (req, res) => {
   const id = req.params.id
   persons = persons.filter(person => person.id !== id)
-  console.log(persons)
   
   res.status(204).end()
 })
