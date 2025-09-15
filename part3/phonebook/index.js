@@ -1,9 +1,13 @@
-// App initialization
+// Imports
 const express = require('express')
+var morgan = require('morgan')
+
+// App initialization
 const app = express()
 
-// JSON middleware parser
+// Middleware
 app.use(express.json())
+app.use(morgan('tiny'))
 
 // Hardcoded database
 let persons = [
