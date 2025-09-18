@@ -1,0 +1,34 @@
+{
+  "persons": [
+    {
+      "id": "1",
+      "name": "Arto Hellas",
+      "number": "040-123456"
+    },
+    {
+      "id": "3",
+      "name": "Mary Poppendieck",
+      "number": "39-23-6423122"
+    },
+    {
+      "id": "4",
+      "name": "Marcos Perez",
+      "number": "789523789"
+    },
+    {
+      "id": "5",
+      "name": "Manolo Martinez",
+      "number": "684268212"
+    },
+    {
+      "id": "6",
+      "name": "Manolo Martin",
+      "number": "638839291"
+    },
+    {
+      "id": "bbc2",
+      "name": "Juan Antonio",
+      "number": "89348934"
+    }
+  ]
+}

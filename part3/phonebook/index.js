@@ -1,6 +1,7 @@
 // Imports
 const express = require('express')
 var morgan = require('morgan')
+const cors = require('cors')
 
 // App initialization
 const app = express()
@@ -8,7 +9,13 @@ const app = express()
 // Morgan tokens
 morgan.token('postData', (req, res) => (JSON.stringify(req.body)))
 
+// Cors configuration
+var corsOptions = {
+  origin: 'http://localhost:5173'
+}
+
 // Middleware
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :postData'))
 
