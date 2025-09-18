@@ -1,0 +1,7 @@
+POST https://phonebook-backend-rx1t.onrender.com/api/persons
+content-type: application/json
+
+{
+    "name": "Juan Antonio",
+    "number": "0352335802"
+}
