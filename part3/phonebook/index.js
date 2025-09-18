@@ -16,6 +16,7 @@ var corsOptions = {
 
 // Middleware
 app.use(cors(corsOptions))
+app.use(express.static('frontend/dist'))
 app.use(express.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :postData'))
 
