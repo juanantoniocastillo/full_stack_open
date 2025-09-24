@@ -1,6 +1,8 @@
 // Imports
+require('dotenv').config()
 const express = require('express')
 var morgan = require('morgan')
+const Person = require('./models/person')
 
 // App initialization
 const app = express()
@@ -42,25 +44,32 @@ let persons = [
 // Get info
 app.get('/info', (req, res) => {
   const req_time = new Date().toString()
-  res.send(`Phonebook has info for ${persons.length} people.<br><br>${req_time}`)
+  Person.find({}).then(persons => {
+    res.send(`Phonebook has info for ${persons.length} people.<br><br>${req_time}`)
+  })
 })
 
 // Get all resources
 app.get('/api/persons', (req, res) => {
-  res.json(persons)
+  Person.find({}).then(persons => {
+    res.json(persons)
+  })
 })
 
 // Get a specific resource
 app.get('/api/persons/:id', (req, res) => {
   const id = req.params.id
-  const req_person = persons.find(element => element.id === id)
 
-  if (req_person) {
-    res.json(req_person)
-  } else {
-    res.statusMessage = `ID ${id} not found.`
-    res.status(404).end()
-  }
+  Person
+    .findById(id)
+    .then(person => {
+      res.json(person)
+    })
+    .catch(error => {
+      console.log(`Error getting ID ${id}: ${error.message}`)
+      res.statusMessage = `ID ${id} not found.`
+      res.status(404).end()
+    })
 })
 
 // Delete a specific resource
@@ -102,7 +111,7 @@ app.post('/api/persons', (req, res) => {
 
 
 // Listen to HTTP requests
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
