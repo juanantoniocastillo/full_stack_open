@@ -90,23 +90,24 @@ app.post('/api/persons', (req, res) => {
     })
   }
 
-  const repeated_name = persons.find(person => person.name === body.name)
+  // const repeated_name = persons.find(person => person.name === body.name)
 
-  if (repeated_name) {
-    return res.status(400).json({
-      error: 'Name already exists'
-    })
-  }
-
-  const new_person = {
-    id: String(Math.floor(Math.random() * 1000000000)),
+  // if (repeated_name) {
+  //   return res.status(400).json({
+  //     error: 'Name already exists'
+  //   })
+  // }
+  const newPerson = new Person({
     name: body.name,
-    number : body.number
-  }
+    number: body.number,
+  })
 
-  persons = persons.concat(new_person)
-
-  res.json(new_person)
+  newPerson
+    .save()
+    .then(savedPerson => {
+      console.log(savedPerson)
+      res.json(savedPerson)
+    })
 })
 
 
