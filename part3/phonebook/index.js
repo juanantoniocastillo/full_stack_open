@@ -19,22 +19,27 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :p
 // API operations
 
 // Get info
-app.get('/info', (req, res) => {
+app.get('/info', (req, res, next) => {
   const req_time = new Date().toString()
-  Person.find({}).then(persons => {
-    res.send(`Phonebook has info for ${persons.length} people.<br><br>${req_time}`)
-  })
+  Person
+    .find({})
+    .then(persons => {
+      res.send(`Phonebook has info for ${persons.length} people.<br><br>${req_time}`)
+    })
+    .catch(error => next(error))
 })
 
 // Get all resources
-app.get('/api/persons', (req, res) => {
-  Person.find({}).then(persons => {
-    res.json(persons)
-  })
+app.get('/api/persons', (req, res, next) => {
+  Person
+    .find({}).then(persons => {
+      res.json(persons)
+    })
+    .catch(error => next(error))
 })
 
 // Get a specific resource
-app.get('/api/persons/:id', (req, res) => {
+app.get('/api/persons/:id', (req, res, next) => {
   const id = req.params.id
 
   Person
@@ -42,15 +47,11 @@ app.get('/api/persons/:id', (req, res) => {
     .then(person => {
       res.json(person)
     })
-    .catch(error => {
-      console.log(`Error getting ID ${id}: ${error.message}`)
-      res.statusMessage = `ID ${id} not found.`
-      res.status(404).end()
-    })
+    .catch(error => next(error))
 })
 
 // Delete a specific resource
-app.delete('/api/persons/:id', (req, res) => {
+app.delete('/api/persons/:id', (req, res, next) => {
   const id = req.params.id
   Person
     .findByIdAndDelete(id)
@@ -61,10 +62,11 @@ app.delete('/api/persons/:id', (req, res) => {
         res.status(204).end()
       }
     })
+    .catch(error => next(error))
 })
 
 // Add a new resource
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res, next) => {
   const body = req.body
 
   if (!body.name || !body.number) {
@@ -73,13 +75,6 @@ app.post('/api/persons', (req, res) => {
     })
   }
 
-  // const repeated_name = persons.find(person => person.name === body.name)
-
-  // if (repeated_name) {
-  //   return res.status(400).json({
-  //     error: 'Name already exists'
-  //   })
-  // }
   const newPerson = new Person({
     name: body.name,
     number: body.number,
@@ -90,8 +85,21 @@ app.post('/api/persons', (req, res) => {
     .then(savedPerson => {
       res.json(savedPerson)
     })
+    .catch(error => next(error))
 })
 
+// Error handler
+const errorHandler = (error, req, res, next) => {
+  console.log(error.message)
+
+  if (error.name === 'CastError') {
+    res.status(400).send({error: 'malformatted id'})
+  }
+
+  next(error)
+}
+
+app.use(errorHandler)
 
 // Listen to HTTP requests
 const PORT = process.env.PORT
