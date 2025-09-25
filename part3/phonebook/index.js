@@ -38,7 +38,7 @@ app.get('/api/persons', (req, res, next) => {
     .catch(error => next(error))
 })
 
-// Get a specific resource
+// Get a specific resource 
 app.get('/api/persons/:id', (req, res, next) => {
   const id = req.params.id
 
