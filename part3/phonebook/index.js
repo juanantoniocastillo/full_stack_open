@@ -88,6 +88,27 @@ app.post('/api/persons', (req, res, next) => {
     .catch(error => next(error))
 })
 
+// Modify an existing resource
+app.put('/api/persons/:id', (req, res, next) => {
+  const {name, number} = req.body
+
+  Person
+    .findById(req.params.id)
+    .then(person => {
+      if (!person) {
+        return res.status(404).end()
+      }
+
+      person.name = name
+      person.number = number
+
+      person.save().then(updatedPerson =>
+        res.json(updatedPerson)
+      )
+    })
+    .catch(error => next(error))
+})
+
 // Error handler
 const errorHandler = (error, req, res, next) => {
   console.log(error.message)
