@@ -46,6 +46,10 @@ const NewEntryForm = ({persons, setPersons, newName, setNewName, newNumber, setN
                         setNotificationInfo({ message: `Added ${returnedPerson.name}.`, error: false })
                         setTimeout(() => setNotificationInfo({ message: null, error: false }), 5000)
                     })
+                    .catch(error => {
+                        setNotificationInfo({ message: error.response.data.error, error: true })
+                        setTimeout(() => setNotificationInfo({ message: null, error: false }), 5000)
+                    })
             }
         }
     }
