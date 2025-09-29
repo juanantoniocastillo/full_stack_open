@@ -24,13 +24,19 @@ const NewEntryForm = ({persons, setPersons, newName, setNewName, newNumber, setN
                                 setTimeout(() => setNotificationInfo({ message: null, error: false }), 5000)
                             })
                             .catch(error => {
-                                setNotificationInfo({
-                                    message: `Information of ${updatedPerson.name} has already been removed from server.`,
-                                    error: true
-                                })
-                                setPersons(persons.filter(person => person.id !== updatedPerson.id))
-                                setNewName('')
-                                setNewNumber('')
+                                console.log('Error:\n', error)
+
+                                if (error.status === 400) {
+                                    setNotificationInfo({ message: 'Number has incorrect format. Please check it.', error: true })
+                                } else if (error.status === 404) {
+                                    setNotificationInfo({ message: `Information of ${updatedPerson.name} has already been removed from server.`, error: true })
+                                    setPersons(persons.filter(person => person.id !== updatedPerson.id))
+                                    setNewName('')
+                                    setNewNumber('')
+                                } else {
+                                    setNotificationInfo({ message: error.response.data, error: true })
+                                }
+                                
                                 setTimeout(() => setNotificationInfo({ message: null, error: false }), 5000)
                             })
                     }                   

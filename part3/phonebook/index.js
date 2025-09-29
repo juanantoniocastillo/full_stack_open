@@ -102,7 +102,7 @@ app.put('/api/persons/:id', (req, res, next) => {
       person.name = name
       person.number = number
 
-      person.save().then(updatedPerson =>
+      return person.save().then(updatedPerson =>
         res.json(updatedPerson)
       )
     })
@@ -111,6 +111,7 @@ app.put('/api/persons/:id', (req, res, next) => {
 
 // Error handler
 const errorHandler = (error, req, res, next) => {
+  console.log('Error:')
   console.log(error.message)
 
   if (error.name === 'CastError') {
