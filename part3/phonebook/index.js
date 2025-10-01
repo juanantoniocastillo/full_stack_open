@@ -8,7 +8,7 @@ const Person = require('./models/person')
 const app = express()
 
 // Morgan tokens
-morgan.token('postData', (req, res) => (JSON.stringify(req.body)))
+morgan.token('postData', (req) => (JSON.stringify(req.body)))
 
 // Middleware
 app.use(express.static('frontend/dist'))
@@ -38,7 +38,7 @@ app.get('/api/persons', (req, res, next) => {
     .catch(error => next(error))
 })
 
-// Get a specific resource 
+// Get a specific resource
 app.get('/api/persons/:id', (req, res, next) => {
   const id = req.params.id
 
@@ -90,7 +90,7 @@ app.post('/api/persons', (req, res, next) => {
 
 // Modify an existing resource
 app.put('/api/persons/:id', (req, res, next) => {
-  const {name, number} = req.body
+  const { name, number } = req.body
 
   Person
     .findById(req.params.id)
