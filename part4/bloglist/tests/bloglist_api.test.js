@@ -35,6 +35,27 @@ test('all blogs has id property and not _id', async () => {
   }
 })
 
+test('a new valid blog can be added', async () => {
+  const newBlog = {
+    title: 'El blog de Juanan',
+    author: 'Juan Antonio Castillo',
+    url: 'http://elblogdejuananinventado.com',
+    likes: 6,
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const blogsAtTheEnd = await helper.blogsInDb()
+  assert.strictEqual(blogsAtTheEnd.length,   helper.initialBlogs.length + 1)
+
+  const titles = blogsAtTheEnd.map(n => n.title)
+  assert(titles.includes('El blog de Juanan'))
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
