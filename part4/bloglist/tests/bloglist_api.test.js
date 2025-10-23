@@ -56,6 +56,27 @@ test('a new valid blog can be added', async () => {
   assert(titles.includes('El blog de Juanan'))
 })
 
+test('a request without likes property is assigned to 0', async () => {
+  const newBlog = {
+    title: 'El blog de Juanan',
+    author: 'Juan Antonio Castillo',
+    url: 'http://elblogdejuananinventado.com',
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const blogsAtTheEnd = await helper.blogsInDb()
+  const addedBlog = blogsAtTheEnd.find(blog => blog.title === 'El blog de Juanan')
+
+  assert.strictEqual(Object.hasOwn(addedBlog, 'likes'), true)
+  assert.strictEqual(addedBlog.likes, 0)
+
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
