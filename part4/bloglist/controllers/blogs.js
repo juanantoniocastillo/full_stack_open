@@ -26,4 +26,16 @@ blogsRouter.post('/', async (req, res) => {
   res.status(201).json(savedBlog)
 })
 
+blogsRouter.delete('/:id', async (req, res) => {
+  const id = req.params.id
+
+  const deletedPerson = await Blog.findByIdAndDelete(id)
+
+  if (!deletedPerson) {
+    res.status(404).end()
+  } else {
+    res.status(204).end()
+  }
+})
+
 module.exports = blogsRouter
