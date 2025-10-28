@@ -145,6 +145,37 @@ describe('when there is initially some blogs saved', () => {
     })
 
   })
+
+  describe('a put request', () => {
+
+    test('to an existing id is successfully updated', async () => {
+      const blogsAtTheBeginning = await helper.blogsInDb()
+
+      const blogToUpdate = { ...blogsAtTheBeginning[0], likes: 99 }
+
+      await api
+        .put(`/api/blogs/${blogToUpdate.id}`)
+        .send(blogToUpdate)
+        .expect(200)
+
+      const blogsAtTheEnd = await helper.blogsInDb()
+      const updatedBlog = blogsAtTheEnd.find(blog => blog.id === blogToUpdate.id)
+
+      assert.strictEqual(updatedBlog.likes, 99)
+    })
+
+    test('to wrong id is answered with 404 Not Found', async () => {
+      const blogsAtTheBeginning = await helper.blogsInDb()
+
+      const blogToUpdate = { ...blogsAtTheBeginning[0], likes: 99, id: '5a422a851b54a676234d17f7' }
+
+      await api
+        .put(`/api/blogs/${blogToUpdate.id}`)
+        .send(blogToUpdate)
+        .expect(404)
+    })
+
+  })
 })
 
 after(async () => {
