@@ -1,9 +1,10 @@
 POST http://localhost:3001/api/blogs
-content-type: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imp1YW5hbjM4IiwiaWQiOiI2OTA4ODI3ZWFjMDc2ZjU5ZWZhMzQzNmUiLCJpYXQiOjE3NjI3NzAxMjZ9.4TEwxhaDDloMDMd1JW0_TmRQEfYPJ-4gd0MjzDwC0dU
 
 {
-    "title": "Blog de Irene",
-    "author": "Irene",
-    "url": "www.irene.com",
-    "likes": 7
+    "title": "Blog de Paco",
+    "author": "Paco",
+    "url": "www.paco.com",
+    "likes": 3
 }
