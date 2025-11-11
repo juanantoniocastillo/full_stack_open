@@ -1,5 +1,16 @@
 const logger = require('./logger')
 
+const tokenExtractor = (req, res, next) => {
+
+  const authorization = req.get('authorization')
+
+  if (authorization && authorization.startsWith('Bearer ')) {
+    req.token = authorization.replace('Bearer ', '')
+  }
+
+  next()
+}
+
 const requestLogger = (req, res, next) => {
   logger.info('Method:', req.method)
   logger.info('Path:  ', req.path)
@@ -27,6 +38,7 @@ const errorHandler = (error, req, res, next) => {
 }
 
 module.exports = {
+  tokenExtractor,
   requestLogger,
   unknownEndpoint,
   errorHandler

@@ -1,10 +1,10 @@
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imp1YW5hbjM4IiwiaWQiOiI2OTA4ODI3ZWFjMDc2ZjU5ZWZhMzQzNmUiLCJpYXQiOjE3NjI3NzAxMjZ9.4TEwxhaDDloMDMd1JW0_TmRQEfYPJ-4gd0MjzDwC0dU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imp1YW5hbjM4IiwiaWQiOiI2OTA4ODI3ZWFjMDc2ZjU5ZWZhMzQzNmUiLCJpYXQiOjE3NjI4NzY2OTF9.J48PicVH8ExJjwP_AgcUlzxFa_yLgqsqMizgUW4xzCs
 
 {
-    "title": "Blog de Paco",
-    "author": "Paco",
-    "url": "www.paco.com",
+    "title": "Blog de K",
+    "author": "K",
+    "url": "www.k.com",
     "likes": 3
 }
