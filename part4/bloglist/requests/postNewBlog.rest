@@ -1,6 +1,6 @@
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imp1YW5hbjM4IiwiaWQiOiI2OTA4ODI3ZWFjMDc2ZjU5ZWZhMzQzNmUiLCJpYXQiOjE3NjI4NzY2OTF9.J48PicVH8ExJjwP_AgcUlzxFa_yLgqsqMizgUW4xzCs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imp1YW5hbjM4IiwiaWQiOiI2OTA4ODI3ZWFjMDc2ZjU5ZWZhMzQzNmUiLCJpYXQiOjE3NjI5NTQ5NDB9.8WOumZdVqrx12YLispPnKFLmOB9R32P2Kvp0F1fxOwQ
 
 {
     "title": "Blog de K",
