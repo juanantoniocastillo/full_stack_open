@@ -58,4 +58,15 @@ const usersInDb = async () => {
   return users.map(user => user.toJSON())
 }
 
-module.exports = { initialBlogs, blogsInDb, usersInDb }
+const loginUser = async (superAgent, user) => {
+
+  const response = await superAgent
+    .post('/api/login')
+    .send(user)
+
+  const loggedUser = response.body
+
+  return loggedUser.token
+}
+
+module.exports = { initialBlogs, blogsInDb, usersInDb, loginUser }
