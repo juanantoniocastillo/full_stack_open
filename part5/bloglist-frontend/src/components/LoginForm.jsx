@@ -1,4 +1,5 @@
 import loginService from '../services/login'
+import blogService from '../services/blogs'
 
 const LoginForm = ({ username, setUsername, password, setPassword, setUser, setErrorMessage }) => {
 
@@ -11,6 +12,7 @@ const LoginForm = ({ username, setUsername, password, setPassword, setUser, setE
       setUsername('')
       setPassword('')
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
+      blogService.setToken(user.token)
     } catch {
       setErrorMessage('Wrong credentials.')
       setTimeout(() => {

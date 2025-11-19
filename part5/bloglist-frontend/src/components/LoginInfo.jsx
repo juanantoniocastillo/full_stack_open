@@ -1,8 +1,11 @@
+import blogService from '../services/blogs'
+
 const LoginInfo = ({ name, setUser }) => {
 
   const handleClick = () => {
     window.localStorage.clear()
     setUser(null)
+    blogService.setToken(null)
   }
 
   return (
