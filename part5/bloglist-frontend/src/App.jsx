@@ -3,6 +3,7 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import LoginForm from './components/LoginForm'
 import ErrorNotification from './components/ErrorNotification'
+import LoginInfo from './components/LoginInfo'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -17,6 +18,14 @@ const App = () => {
     )  
   }, [])
 
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+    }
+  }, [])
+
   if (!user) {
     return (
       <div>
@@ -29,7 +38,7 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
-      <p>{user.name} is logged in.</p>
+      <LoginInfo name={user.name} setUser={setUser} />
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}

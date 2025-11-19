@@ -10,6 +10,7 @@ const LoginForm = ({ username, setUsername, password, setPassword, setUser, setE
       setUser(user)
       setUsername('')
       setPassword('')
+      window.localStorage.setItem('loggedUser', JSON.stringify(user))
     } catch {
       setErrorMessage('Wrong credentials.')
       setTimeout(() => {
