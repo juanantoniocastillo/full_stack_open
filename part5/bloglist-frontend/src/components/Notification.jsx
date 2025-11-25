@@ -1,5 +1,5 @@
-const ErrorNotification = ({ errorMessage }) => {
-    if (errorMessage === null) {
+const Notification = ({ notificationMessage }) => {
+    if (notificationMessage.message === null) {
         return null
     }
 
@@ -11,14 +11,18 @@ const ErrorNotification = ({ errorMessage }) => {
         borderRadius: 5,
         padding: 10,
         marginBottom: 10,
-        color: 'red'
+        color: 'green'
+    }
+
+    if (notificationMessage.error) {
+        notificationStyle.color = 'red'
     }
 
     return (
         <div style={notificationStyle}>
-            {errorMessage}
+            {notificationMessage.message}
         </div>
     )
 }
 
-export default ErrorNotification
+export default Notification

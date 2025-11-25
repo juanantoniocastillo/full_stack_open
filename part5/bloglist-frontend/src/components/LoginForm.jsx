@@ -1,7 +1,7 @@
 import loginService from '../services/login'
 import blogService from '../services/blogs'
 
-const LoginForm = ({ username, setUsername, password, setPassword, setUser, setErrorMessage }) => {
+const LoginForm = ({ username, setUsername, password, setPassword, setUser, setNotificationMessage }) => {
 
   const handleLogin = async event => {
     event.preventDefault()
@@ -14,9 +14,9 @@ const LoginForm = ({ username, setUsername, password, setPassword, setUser, setE
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
       blogService.setToken(user.token)
     } catch {
-      setErrorMessage('Wrong credentials.')
+      setNotificationMessage({ message: 'Wrong credentials.', error: true })
       setTimeout(() => {
-        setErrorMessage(null)
+        setNotificationMessage({ message: null, error: false })
       }, 5000)
     }
   }

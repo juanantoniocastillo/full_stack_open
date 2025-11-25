@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import LoginForm from './components/LoginForm'
-import ErrorNotification from './components/ErrorNotification'
+import Notification from './components/Notification'
 import LoginInfo from './components/LoginInfo'
 import NewBlogForm from './components/NewBlogForm'
 
@@ -11,7 +11,7 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [notificationMessage, setNotificationMessage] = useState({ message: null, error: false })
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -30,8 +30,8 @@ const App = () => {
   if (!user) {
     return (
       <div>
-        <ErrorNotification errorMessage={errorMessage} />
-        <LoginForm username={username} setUsername={setUsername} password={password} setPassword={setPassword} setUser={setUser} setErrorMessage={setErrorMessage} />
+        <Notification notificationMessage={notificationMessage} />
+        <LoginForm username={username} setUsername={setUsername} password={password} setPassword={setPassword} setUser={setUser} setNotificationMessage={setNotificationMessage} />
       </div>
     )
   }
@@ -39,8 +39,9 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+      <Notification notificationMessage={notificationMessage} />
       <LoginInfo name={user.name} setUser={setUser} />
-      <NewBlogForm blogs={blogs} setBlogs={setBlogs} />
+      <NewBlogForm blogs={blogs} setBlogs={setBlogs} setNotificationMessage={setNotificationMessage} />
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
