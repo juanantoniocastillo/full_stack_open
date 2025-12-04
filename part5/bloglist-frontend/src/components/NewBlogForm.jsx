@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
-// Exercise 6 already done
+
 const NewBlogForm = ({ blogs, setBlogs, setNotificationMessage, newBlogFormRef }) => {
 
   const [title, setTittle] = useState('')
