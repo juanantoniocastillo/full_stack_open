@@ -33,6 +33,8 @@ blogsRouter.post('/', middleware.userExtractor, async (req, res) => {
 
   const savedBlog = await newBlog.save()
 
+  await savedBlog.populate('user', { username: 1, name: 1, id: 1 })
+
   user.blogs =  user.blogs.concat(savedBlog._id)
   await user.save()
 
@@ -66,8 +68,14 @@ blogsRouter.delete('/:id', middleware.userExtractor, async (req, res) => {
   }
 })
 
-blogsRouter.put('/:id', async (req, res) => {
+blogsRouter.put('/:id', middleware.userExtractor, async (req, res) => {
   const blogToUpdate = await Blog.findById(req.params.id)
+
+  const user = req.user
+
+  if (!user) {
+    return res.status(400).json({ error: 'UserId missing or not valid' })
+  }
 
   if (!blogToUpdate) {
     return res.status(404).end()

@@ -1,11 +1,13 @@
 import { useState } from "react"
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, blogs, setBlogs }) => {
+const Blog = ({ blog, blogs, setBlogs, user }) => {
   const [visible, setVisible] = useState(false)
 
   const buttonText = visible ? 'Hide' : 'View'
   const showWhenVisible = { display: visible ? '' : 'none' }
+
+  const removeVisible = { display: user.username === blog.user.username ? '' : 'none' }
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -40,6 +42,16 @@ const Blog = ({ blog, blogs, setBlogs }) => {
 
   }
 
+  const handleRemoveClick = async () => {
+    if (window.confirm(`You are going to delete ${blog.title} by ${blog.author}. Do you want to proceed?`)) {
+      await blogService.deleteBlog(blog)
+
+      const updatedBlogs = blogs.filter(b => b.id !== blog.id)
+
+      setBlogs(updatedBlogs)
+    }
+  }
+
   return (
     <div style={blogStyle}>
       <div>
@@ -56,6 +68,9 @@ const Blog = ({ blog, blogs, setBlogs }) => {
         </div>
         <div>
           {blog.user.name}
+        </div>
+        <div style={removeVisible}>
+          <button onClick={handleRemoveClick}>Remove</button>
         </div>
       </div>
     </div>
