@@ -32,8 +32,10 @@ const Blog = ({ blog, blogs, setBlogs }) => {
           return iterableBlog
         }
       })
+
+      const updatedReorderedBlogs = updatedBlogs.toSorted((a, b) => b.likes - a.likes)
       
-      setBlogs(updatedBlogs)
+      setBlogs(updatedReorderedBlogs)
     }
 
   }
