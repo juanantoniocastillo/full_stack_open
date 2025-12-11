@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from 'react'
 import blogService from '../services/blogs'
 
 const Blog = ({ blog, blogs, setBlogs, user }) => {
@@ -29,14 +29,14 @@ const Blog = ({ blog, blogs, setBlogs, user }) => {
     if (response) {
       const updatedBlogs = blogs.map(iterableBlog => {
         if (iterableBlog.id === blog.id) {
-          return {...iterableBlog, likes: iterableBlog.likes + 1}
+          return { ...iterableBlog, likes: iterableBlog.likes + 1 }
         } else {
           return iterableBlog
         }
       })
 
       const updatedReorderedBlogs = updatedBlogs.toSorted((a, b) => b.likes - a.likes)
-      
+
       setBlogs(updatedReorderedBlogs)
     }
 

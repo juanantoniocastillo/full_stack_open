@@ -23,10 +23,10 @@ const NewBlogForm = ({ blogs, setBlogs, setNotificationMessage, newBlogFormRef }
     setBlogs(blogs.concat(returnedBlog))
 
     setNotificationMessage({ message: `A new blog ${returnedBlog.title} by ${returnedBlog.author} added`, error: false })
-      setTimeout(() => {
-        setNotificationMessage({ message: null, error: false })
-      }, 5000)
-    
+    setTimeout(() => {
+      setNotificationMessage({ message: null, error: false })
+    }, 5000)
+
     setTittle('')
     setAuthor('')
     setUrl('')

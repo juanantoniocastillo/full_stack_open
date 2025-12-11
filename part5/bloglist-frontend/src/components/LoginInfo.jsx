@@ -15,7 +15,7 @@ const LoginInfo = ({ name, setUser }) => {
       </p>
     </div>
   )
-  
+
 }
 
 export default LoginInfo
