@@ -54,7 +54,7 @@ const Blog = ({ blog, blogs, setBlogs, user }) => {
 
   return (
     <div style={blogStyle}>
-      <div>
+      <div datatype-testid='titleNdAuthor'>
         {blog.title} {blog.author}
         <button onClick={toggleVisibility}>{buttonText}</button>
       </div>
