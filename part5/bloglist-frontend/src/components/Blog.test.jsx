@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
 
 describe('The component displaying a blog', () => {
@@ -45,13 +46,25 @@ describe('The component displaying a blog', () => {
     screen.queryByTestId('titleNdAuthor')
   })
 
-  test('does not render url', () => {
+  test('does not render url by default', () => {
     const element = screen.getByText('www.juanan.com')
     expect(element).not.toBeVisible()
   })
 
-  test('does not render likes', () => {
+  test('does not render likes by default', () => {
     const element = screen.getByText('2')
     expect(element).not.toBeVisible()
+  })
+
+  test('renders url and likes after clicking View button', async () => {
+    const user = userEvent.setup()
+    const button = screen.getByText('View')
+    await user.click(button)
+
+    const urlElement = screen.getByText('www.juanan.com')
+    expect(urlElement).toBeVisible()
+
+    const likesElement = screen.getByText('2')
+    expect(likesElement).toBeVisible()
   })
 })
