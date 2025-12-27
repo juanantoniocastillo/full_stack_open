@@ -18,8 +18,6 @@ const NewBlogForm = ({ blogs, setBlogs, setNotificationMessage, newBlogFormRef }
 
     const returnedBlog = await blogService.create(newBlog)
 
-    console.log('returnedBlog:', returnedBlog)
-
     setBlogs(blogs.concat(returnedBlog))
 
     setNotificationMessage({ message: `A new blog ${returnedBlog.title} by ${returnedBlog.author} added`, error: false })
@@ -39,7 +37,7 @@ const NewBlogForm = ({ blogs, setBlogs, setNotificationMessage, newBlogFormRef }
       <form onSubmit={handleCreate}>
         <div>
           <label>
-            tittle
+            title
             <input
               type='text'
               value={title}
