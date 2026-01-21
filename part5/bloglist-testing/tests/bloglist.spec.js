@@ -92,4 +92,43 @@ describe('Blog app', () => {
       await expect(page.getByRole('button', { name: 'Remove' })).not.toBeVisible()
     })
   })
+
+  describe('When there is three blogs', () => {
+    beforeEach(async ({ page }) => {
+      await loginWith(page, user1['username'], user1['password'])
+      await postBlog(page, 'BlogOne', 'Er Juanan', 'www.testone.com')
+      await postBlog(page, 'BlogTwo', 'Er Michel', 'www.testtwo.com')
+      await postBlog(page, 'BlogThree', 'La mikaela', 'www.testthree.com')
+    })
+
+    test('they are ordered according to the likes', async ({ page }) => {
+      const blogTwoLocator = page.locator('div[datatype-testid="titleNdAuthor"]').getByText('BlogTwo').locator('..')
+      await blogTwoLocator.getByRole('button', { name: 'view' }).click()
+      const blogTwoLikeButton = blogTwoLocator.getByRole('button', { name: 'Like' })
+      await blogTwoLikeButton.click()
+      await blogTwoLocator.getByText('1').waitFor()
+      await blogTwoLikeButton.click()
+      await blogTwoLocator.getByText('2').waitFor()
+      await blogTwoLikeButton.click()
+      await blogTwoLocator.getByText('3').waitFor()
+
+      await expect(blogTwoLocator.getByText('3')).toBeVisible()
+
+      const blogThreeLocator = page.locator('div[datatype-testid="titleNdAuthor"]').getByText('BlogThree').locator('..')
+      await blogThreeLocator.getByRole('button', { name: 'view' }).click()
+      const blogThreeLikeButton = blogThreeLocator.getByRole('button', { name: 'Like' })
+      await blogThreeLikeButton.click()
+      await blogThreeLocator.getByText('1').waitFor()
+      await blogThreeLikeButton.click()
+      await blogThreeLocator.getByText('2').waitFor()
+
+      await expect(blogThreeLocator.getByText('2')).toBeVisible()
+
+      const blogList = await page.locator('div[datatype-testid="titleNdAuthor"]').all()
+
+      await expect(blogList[0]).toContainText('BlogTwo')
+      await expect(blogList[1]).toContainText('BlogThree')
+      await expect(blogList[2]).toContainText('BlogOne')
+    })
+  })
 })
