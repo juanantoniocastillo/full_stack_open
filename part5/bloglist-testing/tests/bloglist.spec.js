@@ -54,11 +54,10 @@ describe('Blog app', () => {
     beforeEach(async ({ page }) => {
       await loginWith(page, data['username'], data['password'])
       await postBlog(page, 'Blog de prueba', 'Er Juanan', 'www.test.com')
+      await page.getByRole('button', { name: 'view' }).click()
     })
 
-    test.only('it can be liked', async ({ page }) => {
-      await page.getByRole('button', { name: 'view' }).click()
-
+    test('it can be liked', async ({ page }) => {
       const likeButton = page.getByRole('button', { name: 'Like' })
 
       await expect(page.getByText('0')).toBeVisible()
@@ -67,6 +66,13 @@ describe('Blog app', () => {
       await likeButton.click()
 
       await expect(page.getByText('1')).toBeVisible()
+    })
+
+    test('it can be deleted by the user who added', async ({ page }) => {
+      page.on('dialog', dialog => dialog.accept())
+      await page.getByRole('button', { name: 'Remove' }).click()
+
+      await expect(page.locator('div[datatype-testid="titleNdAuthor"]').getByText('Blog de prueba')).not.toBeVisible()
     })
   })
 })
